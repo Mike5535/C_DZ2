@@ -22,8 +22,8 @@ void threadFunc(void* thread_data){
             data->num_all[i]++;
     }
     fseek(input_file, 0, SEEK_SET);
-
-	return NULL;
+    
+	 pthread_exit(NULL);
 }
 
 size_t* processing_threads(FILE* source_file)
@@ -55,6 +55,6 @@ size_t* processing_threads(FILE* source_file)
 
     free(threads);
 	free(threadData);
-
+    
     return result_count;
 }
