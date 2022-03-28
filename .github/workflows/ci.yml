@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2 
     - run: pwd
-    - run: cmake ../DZ2_C/project
+    - run: cmake ../C_DZ2/project
     - run: make 
     - run: ./tests/test
     - run: lcov -t "coverageTests" -o coverage.info -c -d .
@@ -28,7 +28,7 @@ jobs:
     container: mike5535/cmake_clang-format:third
     steps:
     - uses: actions/checkout@v2 
-    - run: cmake ../DZ2_C/project
+    - run: cmake ../C_DZ2/project
     - run: make 
     - run: ./tests/test
     - run: valgrind --track-origins=yes --leak-check=yes --log-file=valgrindLogs.txt ./tests/test
