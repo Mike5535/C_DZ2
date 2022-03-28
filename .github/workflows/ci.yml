@@ -30,7 +30,6 @@ jobs:
     - uses: actions/checkout@v2 
     - run: cmake ../C_DZ2/project
     - run: make 
-    - run: ./tests/test
     - run: valgrind --track-origins=yes --leak-check=yes --log-file=valgrindLogs.txt ./tests/test
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
