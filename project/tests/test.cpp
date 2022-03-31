@@ -33,7 +33,7 @@ TEST(thread_processing, two) {
     
     FILE* stdinn = tmpfile();
     
-    for(size_t i = 0; i < 100000; i++) //100MB = 104857601 byte
+    for(size_t i = 0; i < 100001; i++) //100MB = 104857601 byte
     {
         fprintf(stdinn,"1");
     }  
