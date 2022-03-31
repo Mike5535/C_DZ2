@@ -7,24 +7,22 @@
 
 void main()
 {
-   
-
     FILE* test_file = fopen("../test10char", "r");
-    size_t* count_linear = NULL;
-    size_t* count_thread = NULL;
+    size_t* count = NULL;
 
     if (test_file)
+        count = processing_threads(test_file);
+
+    if (count)
     {
-        count_linear = count_pair(test_file);
-        count_thread = processing_threads(test_file,"../test10char");
+        for (size_t k = 0; k < 11; k++)
+        {
+            printf("%zu\n", count[k]);
+
+        }
     }
 
-    for(size_t i =0;i<11;i++)
-    {
-    printf("%zu\n",count_linear[i]);
-    }
-
-    free(count_linear);
-    free(count_thread);
+    free(count);
     fclose(test_file);
 }
+

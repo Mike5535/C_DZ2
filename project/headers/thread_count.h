@@ -9,14 +9,16 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#define NUM_THREADS 11
-
-typedef struct{
+#ifndef SIMPLE_COUNT_H
+#define NUM_COUNTS 11
+#endif
+typedef struct {
+    size_t num_thread;
     size_t* num_all;
-	FILE* work_file;
+    FILE* work_file;
 } pthrData;
 
-size_t getFileSize(const char* file_name);
 void threadFunc(void* thread_data);
-size_t* processing_threads(FILE* source_file,const char* path_file);
+void part_file(const size_t step, FILE* block, FILE* input);
+size_t* processing_threads(FILE* const input_file);
 #endif // THREAD_H

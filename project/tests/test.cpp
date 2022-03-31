@@ -31,18 +31,18 @@ TEST(thread_processing, two) {
     
     FILE* stdinn = fopen("../tests/test1","w+b");
     
-    for(size_t i = 0; i < 104857601; i++) //100MB = 104857601 byte
+    for(size_t i = 0; i < 10000001; i++) //100MB = 104857601 byte
     {
         fprintf(stdinn,"1");
     }  
   
     fseek(stdinn,0,SEEK_SET);
 
-    size_t* numbers_pair = processing_threads(stdinn,"../tests/test1");
+    size_t* numbers_pair = processing_threads(stdinn);
 
    
-    EXPECT_EQ( 104857600, numbers_pair[0]);
+    EXPECT_EQ( 10000000, numbers_pair[0]);
 
     free(numbers_pair);
-    
+    fclose(stdinn);
 }

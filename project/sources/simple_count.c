@@ -1,15 +1,15 @@
 #include "../headers/simple_count.h"
 
-size_t* count_pair( FILE* const input_file)
+size_t* count_pair(FILE* const input_file)
 {
-    size_t* count = (size_t*)malloc(11*sizeof(size_t)); // mag num
+    size_t* count = (size_t*)malloc(NUM_COUNTS * sizeof(size_t));
 
-     for (size_t j = 0; j < 11; j++)
+    for (size_t j = 0; j < NUM_COUNTS; j++)
     {
         count[j] = 0;
     }
 
-    for (size_t i = 0; i < 11; i++)
+    for (size_t i = 0; i < NUM_COUNTS; i++)
     {
         size_t z_o = 0;
         char c[2];
@@ -19,13 +19,13 @@ size_t* count_pair( FILE* const input_file)
         {
             if (z_o)
                 z_o--;
-            else 
-                z_o++; 
+            else
+                z_o++;
             if (c[0] - c[1] == i || c[1] - c[0] == i)
                 count[i]++;
         }
         fseek(input_file, 0, SEEK_SET);
     }
-    
+
     return count;
 }
