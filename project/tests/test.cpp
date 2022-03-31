@@ -10,7 +10,7 @@ TEST(linear_processing, one) {
     
     FILE* stdinn = tmpfile();
     
-    for(size_t i = 0; i < 104857601; i++) //100MB = 104857601 byte
+    for(size_t i = 0; i < 100001; i++) //100MB = 104857601 byte
     {
         fprintf(stdinn,"1");
     }  
@@ -22,7 +22,7 @@ TEST(linear_processing, one) {
     
 
    
-    EXPECT_EQ( 104857600, counter[0]);
+    EXPECT_EQ( 100000, counter[0]);
     free(counter);
     fclose(stdinn);
      
@@ -33,7 +33,7 @@ TEST(thread_processing, two) {
     
     FILE* stdinn = tmpfile();
     
-    for(size_t i = 0; i < 104857601; i++) //100MB = 104857601 byte
+    for(size_t i = 0; i < 100000; i++) //100MB = 104857601 byte
     {
         fprintf(stdinn,"1");
     }  
@@ -43,7 +43,7 @@ TEST(thread_processing, two) {
     size_t* numbers_pair = processing_threads(stdinn);
 
    
-    EXPECT_EQ( 104857600, numbers_pair[0]);
+    EXPECT_EQ( 100000, numbers_pair[0]);
 
     free(numbers_pair);
     fclose(stdinn);
