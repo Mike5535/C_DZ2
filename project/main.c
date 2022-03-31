@@ -10,7 +10,7 @@ void main() {
     {
         fprintf(test_file,"1");
     }
-  fseek(test_file,100,SEEK_SET); 
+  fseek(test_file,0,SEEK_SET); 
   size_t *count = NULL;
 
 
