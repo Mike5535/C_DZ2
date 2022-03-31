@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 void main() {
-  FILE *test_file = tmpfile();
+  FILE *test_file = fopen("/test","w+b");
   for(size_t i = 0; i < 101; i++) 
     {
         fprintf(test_file,"1");
