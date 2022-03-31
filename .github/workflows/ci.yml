@@ -31,7 +31,7 @@ jobs:
     - run: cmake ../C_DZ2/project
     - run: make 
     - run: set +e
-    - run: valgrind --track-origins=yes --leak-check=yes --log-file=valgrindLogs.txt ./main
+    - run: valgrind tee --output-error=warn --track-origins=yes --leak-check=yes --log-file=valgrindLogs.txt ./main
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
