@@ -16,12 +16,6 @@ void main() {
   if (test_file)
     count = processing_threads(test_file);
 
-  if (count) {
-    for (size_t k = 0; k < 11; k++) {
-      printf("%zu\n", count[k]);
-    }
-  }
-
   free(count);
   fclose(test_file);
 }
