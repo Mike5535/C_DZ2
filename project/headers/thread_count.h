@@ -12,6 +12,7 @@
 #ifndef SIMPLE_COUNT_H
 #define NUM_COUNTS 11
 #endif
+
 typedef struct {
     size_t num_thread;
     size_t* num_all;

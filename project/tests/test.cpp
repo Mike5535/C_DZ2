@@ -6,7 +6,7 @@ extern "C" {
     #include "../headers/thread_count.h"
 }
 
-/*TEST(linear_processing, one) {
+TEST(linear_processing, one) {
     
     FILE* stdinn = tmpfile();
     
@@ -17,21 +17,22 @@ extern "C" {
   
     fseek(stdinn,0,SEEK_SET);
 
-    size_t* numbers_pair = count_pair(stdinn);
+    size_t* counter = (size_t*)malloc(NUM_COUNTS * sizeof(size_t));
+    count_pair(stdinn,counter);
     
 
    
-    EXPECT_EQ( 104857600, numbers_pair[0]);
-    free(numbers_pair);
+    EXPECT_EQ( 104857600, counter[0]);
+    free(counter);
      
     
-}*/
+}
 
 TEST(thread_processing, two) {
     
     FILE* stdinn = fopen("../tests/test1","w+b");
     
-    for(size_t i = 0; i < 10000001; i++) //100MB = 104857601 byte
+    for(size_t i = 0; i < 104857601; i++) //100MB = 104857601 byte
     {
         fprintf(stdinn,"1");
     }  
@@ -41,7 +42,7 @@ TEST(thread_processing, two) {
     size_t* numbers_pair = processing_threads(stdinn);
 
    
-    EXPECT_EQ( 10000000, numbers_pair[0]);
+    EXPECT_EQ( 104857600, numbers_pair[0]);
 
     free(numbers_pair);
     fclose(stdinn);

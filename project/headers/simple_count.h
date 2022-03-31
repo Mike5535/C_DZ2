@@ -6,5 +6,5 @@
 
 #define NUM_COUNTS 11
 
-size_t* count_pair(FILE* const input_file);
+void count_pair(FILE* const input_file, size_t* count);
 #endif // SIMPLE_COUNT_H
