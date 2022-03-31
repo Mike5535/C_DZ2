@@ -5,7 +5,12 @@
 #include <stdlib.h>
 
 void main() {
-  FILE *test_file = fopen("../test10char", "r");
+  FILE *test_file = tmpfile();
+  for(size_t i = 0; i < 101; i++) 
+    {
+        fprintf(test_file,"1");
+    }
+  fseek(test_file,100,SEEK_SET); 
   size_t *count = NULL;
 
   if (test_file)
