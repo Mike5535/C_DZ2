@@ -22,7 +22,6 @@ void part_file(const size_t step, FILE *block, FILE *input) {
   size_t nread;
 
   nread = fread(buffer, 1, step, input);
-  printf("nread:%zu step:%zu\n", nread, step);
   fwrite(buffer, 1, nread, block);
   fseek(block, 0, SEEK_SET);
   free(buffer);

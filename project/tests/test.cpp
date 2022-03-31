@@ -24,13 +24,14 @@ TEST(linear_processing, one) {
    
     EXPECT_EQ( 104857600, counter[0]);
     free(counter);
+    fclose(stdinn);
      
     
 }
 
 TEST(thread_processing, two) {
     
-    FILE* stdinn = fopen("../tests/test1","w+b");
+    FILE* stdinn = tmpfile();
     
     for(size_t i = 0; i < 104857601; i++) //100MB = 104857601 byte
     {
