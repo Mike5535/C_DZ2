@@ -10,8 +10,8 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -coverage -pthread -lgcov"
 file(GLOB SOURCES "sources/*.c")
 file(GLOB INCLUDE "headers/*.h")
 file(GLOB EXC "main.c")
-file(GLOB EXC_TEST "tests/test.cpp")
-file(GLOB EXC_TEST_VALGRIND "tests/test_valgrind.cpp")
+file(GLOB EXC_TEST "tests/test_100MB.cpp")
+file(GLOB EXC_TEST_VALGRIND "tests/main_test.cpp")
 
 add_library(lib SHARED ${INCLUDE} ${SOURCES})
 add_executable(main ${EXC})
@@ -27,8 +27,8 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(tests ${EXC_TEST})
-target_link_libraries(tests lib gtest_main)
+add_executable(tests_100MB ${EXC_TEST})
+target_link_libraries(tests_100MB lib gtest_main)
 
-add_executable(tests_valgrind ${EXC_TEST_VALGRIND})
-target_link_libraries(tests_valgrind lib gtest_main)
+add_executable(tests ${EXC_TEST_VALGRIND})
+target_link_libraries(tests lib gtest_main)
