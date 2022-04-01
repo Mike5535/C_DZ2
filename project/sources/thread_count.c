@@ -19,7 +19,8 @@ void threadFunc(void *thread_data) {
 
 void part_file(const size_t step, FILE *block, FILE *input) {
   char *buffer = (char *)malloc(step * sizeof(char));
-  size_t nread;
+  if(!buffer) return;
+  size_t nread = 0;
 
   nread = fread(buffer, 1, step, input);
   fwrite(buffer, 1, nread, block);
@@ -51,6 +52,9 @@ size_t *processing_threads(FILE *const input_file) {
   }
 
   FILE **block = (FILE **)malloc(num_threads * sizeof(FILE *));
+  if(!block) return NULL;
+
+  // first steps
 
   for (size_t i = 0; i < num_threads - 1; i++) {
     block[i] = tmpfile();
@@ -72,8 +76,7 @@ size_t *processing_threads(FILE *const input_file) {
 
   threadData[num_threads - 1].num_all = result_count;
   threadData[num_threads - 1].work_file = block[num_threads - 1];
-  pthread_create(&(threads[num_threads - 1]), NULL, threadFunc,
-                 &threadData[num_threads - 1]);
+  pthread_create(&(threads[num_threads - 1]), NULL, threadFunc, &threadData[num_threads - 1]);
 
   for (size_t i = 0; i < num_threads; i++) {
     pthread_join(threads[i], NULL);
