@@ -7,6 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2 
       - run: make check
+
   build_tests:
     runs-on: ubuntu-latest
     container: mike5535/cmake_clang-format:third
@@ -23,14 +24,15 @@ jobs:
       with:
         path: ./report/
         
-  valgrind_tests:
+  valgrind_and_tests100MB:
     runs-on: ubuntu-latest
     container: mike5535/cmake_clang-format:third
     steps:
     - uses: actions/checkout@v2 
     - run: cmake ../C_DZ2/project
     - run: make 
-    - run: valgrind --track-origins=yes --leak-check=full --log-file=valgrindLogs.txt ./tests_valgrind
+    - run: ./tests100MB
+    - run: valgrind --track-origins=yes --leak-check=full --log-file=valgrindLogs.txt ./tests
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
