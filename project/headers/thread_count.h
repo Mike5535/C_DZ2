@@ -14,7 +14,6 @@
 #endif
 
 typedef struct {
-    size_t num_thread;
     size_t* num_all;
     FILE* work_file;
 } pthrData;
