@@ -9,9 +9,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#ifndef SIMPLE_COUNT_H
 #define NUM_COUNTS 11
-#endif
 
 typedef struct {
     size_t* num_all;
