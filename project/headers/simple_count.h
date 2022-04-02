@@ -4,7 +4,5 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NUM_COUNTS 11
-
-void count_pair(FILE* const input_file, size_t* count);
+size_t count_pair(FILE* const input_file, size_t* count, size_t num_counts);
 #endif // SIMPLE_COUNT_H
