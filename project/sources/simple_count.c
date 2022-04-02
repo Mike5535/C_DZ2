@@ -1,11 +1,11 @@
 #include "../headers/simple_count.h"
 
-void count_pair(FILE *const input_file, size_t *count) {
+size_t count_pair(FILE *const input_file, size_t *count,size_t num_counts) {
 
-  if(!input_file) return;
-  if(!count) return;
+  if(!input_file) return-1;
+  if(!count) return -1;
 
-  for (size_t j = 0; j < NUM_COUNTS; j++) {
+  for (size_t j = 0; j < num_counts; j++) {
     count[j] = 0;
   }
 
@@ -18,7 +18,7 @@ void count_pair(FILE *const input_file, size_t *count) {
       z_o--;
     else
       z_o++;
-    for (size_t i = 0; i < NUM_COUNTS; i++)
+    for (size_t i = 0; i < num_counts; i++)
     {
       if (c[0] - c[1] == i || c[1] - c[0] == i)
         count[i]++;
