@@ -6,7 +6,13 @@ void threadFunc(void *thread_data) {
 
   size_t *counter = (size_t *)malloc(NUM_COUNTS * sizeof(size_t));
 
-  count_pair(data->work_file, counter);
+  size_t status =0;
+  status = count_pair(data->work_file, counter, NUM_COUNTS);
+  if(status == -1) 
+  {
+    printf("Invalid args in count pair");
+    return;
+  }
 
   for (size_t i = 0; i < NUM_COUNTS; i++) {
     data->num_all[i] += counter[i];
@@ -33,6 +39,14 @@ size_t *processing_threads(FILE *const input_file) {
   size_t size_file = ftell(input_file);
   fseek(input_file, 0, SEEK_SET);
 
+  size_t *result_count = (size_t *)malloc(NUM_COUNTS * sizeof(size_t));
+
+  for (size_t j = 0; j < NUM_COUNTS; j++) {
+    result_count[j] = 0;
+  }
+
+  if (size_file < 2) return result_count;
+
   size_t num_CPU = sysconf(_SC_NPROCESSORS_ONLN);
 
   size_t num_threads = 2 * num_CPU;
@@ -41,15 +55,9 @@ size_t *processing_threads(FILE *const input_file) {
 
   const size_t last_step = size_file - (step_bytes * (num_threads - 1));
 
-  size_t *result_count = (size_t *)malloc(NUM_COUNTS * sizeof(size_t));
-
   pthread_t *threads = (pthread_t *)malloc(num_threads * sizeof(pthread_t));
 
   pthrData *threadData = (pthrData *)malloc(num_threads * sizeof(pthrData));
-
-  for (size_t j = 0; j < NUM_COUNTS; j++) {
-    result_count[j] = 0;
-  }
 
   FILE **block = (FILE **)malloc(num_threads * sizeof(FILE *));
   if(!block) return NULL;
