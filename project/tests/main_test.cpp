@@ -27,7 +27,7 @@ TEST(linear_processing, one) {
     fseek(stdinn,0,SEEK_SET);
 
     size_t* counter = (size_t*)malloc(NUM_COUNTS * sizeof(size_t));
-    count_pair(stdinn,counter);
+    count_pair(stdinn,counter,NUM_COUNTS);
    
     EXPECT_EQ( 6, counter[1]);
     EXPECT_EQ( 2, counter[2]);
@@ -40,7 +40,47 @@ TEST(linear_processing, one) {
     fclose(stdinn);
 }
 
-TEST(thread_processing, two) {
+TEST(linear_processing, empty_file) {
+    
+    FILE* stdinn = tmpfile();
+
+    size_t* counter = (size_t*)malloc(NUM_COUNTS * sizeof(size_t));
+    count_pair(stdinn,counter,NUM_COUNTS);
+   
+    EXPECT_EQ( 0, counter[1]);
+    EXPECT_EQ( 0, counter[2]);
+    EXPECT_EQ( 0, counter[3]);
+    EXPECT_EQ( 0, counter[4]);
+    EXPECT_EQ( 0, counter[5]);
+    EXPECT_EQ( 0, counter[6]);
+
+    free(counter);
+    fclose(stdinn);
+}
+
+TEST(linear_processing, size_1) {
+    
+    FILE* stdinn = tmpfile();
+    
+    fprintf(stdinn,"1");
+  
+    fseek(stdinn,0,SEEK_SET);
+
+    size_t* counter = (size_t*)malloc(NUM_COUNTS * sizeof(size_t));
+    count_pair(stdinn,counter,NUM_COUNTS);
+   
+    EXPECT_EQ( 0, counter[1]);
+    EXPECT_EQ( 0, counter[2]);
+    EXPECT_EQ( 0, counter[3]);
+    EXPECT_EQ( 0, counter[4]);
+    EXPECT_EQ( 0, counter[5]);
+    EXPECT_EQ( 0, counter[6]);
+
+    free(counter);
+    fclose(stdinn);
+}
+
+TEST(thread_processing, one) {
     
     FILE* stdinn = tmpfile();
     
@@ -73,31 +113,39 @@ TEST(thread_processing, two) {
     fclose(stdinn);
 }
 
-TEST(threadFunc, one) {
+TEST(thread_processing, empty_file) {
     
     FILE* stdinn = tmpfile();
     
-    fprintf(stdinn,"1");
-    fprintf(stdinn,"2");
-    fprintf(stdinn,"3");
-    fprintf(stdinn,"4");
-    fprintf(stdinn,"3");
-    fprintf(stdinn,"2");
-    fprintf(stdinn,"1");
-  
+    size_t* numbers_pair = processing_threads(stdinn);
+
+    EXPECT_EQ( 0, numbers_pair[1]);
+    EXPECT_EQ( 0, numbers_pair[2]);
+    EXPECT_EQ( 0, numbers_pair[3]);
+    EXPECT_EQ( 0, numbers_pair[4]);
+    EXPECT_EQ( 0, numbers_pair[5]);
+    EXPECT_EQ( 0, numbers_pair[6]);
+
+    free(numbers_pair);
+    fclose(stdinn);
+}
+
+TEST(thread_processing, size_1) {
+    
+    FILE* stdinn = tmpfile();
+
     fseek(stdinn,0,SEEK_SET);
 
-    size_t* numbers_pair = (size_t*)malloc(NUM_COUNTS * sizeof(size_t));
+    fprintf(stdinn,"3");
+    
+    size_t* numbers_pair = processing_threads(stdinn);
 
-    pthrData test_data;
-    test_data.work_file = stdinn;
-    test_data.num_all = numbers_pair;
-
-    pthrData* ptest_data = &test_data;
-
-    threadFunc(ptest_data);
-   
-    EXPECT_EQ( 6, numbers_pair[1]);
+    EXPECT_EQ( 0, numbers_pair[1]);
+    EXPECT_EQ( 0, numbers_pair[2]);
+    EXPECT_EQ( 0, numbers_pair[3]);
+    EXPECT_EQ( 0, numbers_pair[4]);
+    EXPECT_EQ( 0, numbers_pair[5]);
+    EXPECT_EQ( 0, numbers_pair[6]);
 
     free(numbers_pair);
     fclose(stdinn);
