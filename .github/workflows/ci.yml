@@ -24,14 +24,13 @@ jobs:
       with:
         path: ./report/
         
-  valgrind_and_tests100MB:
+  valgrind:
     runs-on: ubuntu-latest
     container: mike5535/cmake_clang-format:third
     steps:
     - uses: actions/checkout@v2 
     - run: cmake ../C_DZ2/project
     - run: make 
-    - run: ./tests_100MB
     - run: valgrind --track-origins=yes --leak-check=full --log-file=valgrindLogs.txt ./tests
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
